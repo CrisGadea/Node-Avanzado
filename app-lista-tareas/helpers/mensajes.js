@@ -1,8 +1,14 @@
 import colors from 'colors';
+import * as readline from 'readline';
+//import * as readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'process';
 
-export const mostrarMenu = () => {
-    console.log(
-`${colors.green("==========================")}
+const rl = readline.createInterface({ input, output });
+
+const mostrarMenu = () => {
+    return new Promise((resolve, reject) => {
+        let question = `
+${colors.green("==========================")}
     Seleccione una opción
 ${colors.green("==========================")}
 
@@ -13,5 +19,25 @@ ${colors.green("?")}  ¿Qué desea hacer? (Use arrow keys)
     ${colors.green("4.")} Listar tareas pendientes
     ${colors.green("5.")} Completar tarea(s)
     ${colors.green("6.")} Borrar tarea
-    ${colors.green("0.")} Salir`);
+    ${colors.green("0.")} Salir
+`;
+        rl.question(question,(input) => {
+            console.log("PASO POR ACA!")
+            resolve(input)
+            rl.close()
+        })
+    })
 };
+
+const pausa = () => {
+    return new Promise( (resolve, reject) =>{
+        let aviso = `Presiona ${colors.green('ENTER')} para continuar`
+        rl.question(aviso, (answer) => {
+            resolve(answer)
+        });
+    }) 
+}
+
+export {pausa, mostrarMenu}
+
+
