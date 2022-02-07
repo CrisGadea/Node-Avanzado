@@ -20,9 +20,10 @@ ${colors.green("?")}  ¿Qué desea hacer? (Use arrow keys)
     ${colors.green("5.")} Completar tarea(s)
     ${colors.green("6.")} Borrar tarea
     ${colors.green("0.")} Salir
-`;
+
+Seleccione una opción: `;
+
         rl.question(question,(input) => {
-            console.log("PASO POR ACA!")
             resolve(input)
             rl.close()
         })
@@ -35,6 +36,7 @@ const pausa = () => {
         rl.question(aviso, (answer) => {
             resolve(answer)
         });
+        resolve()
     }) 
 }
 

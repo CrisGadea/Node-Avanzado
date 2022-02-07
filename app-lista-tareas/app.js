@@ -3,17 +3,14 @@ import { mostrarMenu, pausa } from './helpers/mensajes.js';
 console.clear();
 
 const main = async () => {
-    await mostrarMenu()
-    .then(result => {
-        console.log(`{opt: \'${result}\'}`);  
-    })
-    .catch(err => {console.log(err)})
+    let opc;
 
-    await pausa()
-    .then(res => {
-        console.log(`result: ${res}`)
-    })
-    .catch(err => {console.log(err)}) 
+    do {
+        opc = await mostrarMenu();
+        console.log({opc});
+        //await pausa();
+    } while (opc !== '0');
+
 }
 
 main();
