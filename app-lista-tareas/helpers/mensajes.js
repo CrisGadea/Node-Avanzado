@@ -1,45 +1,56 @@
-import colors from 'colors';
-import * as readline from 'readline';
-//import * as readline from 'node:readline/promises';
-import { stdin as input, stdout as output } from 'process';
+require('colors');
 
-const rl = readline.createInterface({ input, output });
 
 const mostrarMenu = () => {
-    return new Promise((resolve, reject) => {
-        let question = `
-${colors.green("==========================")}
-    Seleccione una opción
-${colors.green("==========================")}
 
-${colors.green("?")}  ¿Qué desea hacer? (Use arrow keys)
-    ${colors.green("1.")} Crear tarea
-    ${colors.green("2.")} Listar tareas
-    ${colors.green("3.")} Listar tareas completadas
-    ${colors.green("4.")} Listar tareas pendientes
-    ${colors.green("5.")} Completar tarea(s)
-    ${colors.green("6.")} Borrar tarea
-    ${colors.green("0.")} Salir
+    return new Promise( resolve => {
 
-Seleccione una opción: `;
+        console.clear();
+        console.log('=========================='.green);
+        console.log('  Seleccione una opción'.green);
+        console.log('==========================\n'.green);
 
-        rl.question(question,(input) => {
-            resolve(input)
-            rl.close()
-        })
-    })
-};
+        console.log(`${ '1.'.green } Crear tarea`);
+        console.log(`${ '2.'.green } Listar tareas`);
+        console.log(`${ '3.'.green } Listar tareas completadas`);
+        console.log(`${ '4.'.green } Listar tareas pendientes`);
+        console.log(`${ '5.'.green } Completar tarea(s)`);
+        console.log(`${ '6.'.green } Borrar tarea`);
+        console.log(`${ '0.'.green } Salir \n`);
 
-const pausa = () => {
-    return new Promise( (resolve, reject) =>{
-        let aviso = `Presiona ${colors.green('ENTER')} para continuar`
-        rl.question(aviso, (answer) => {
-            resolve(answer)
+        const readline = require('readline').createInterface({
+            input: process.stdin,
+            output: process.stdout
         });
-        resolve()
-    }) 
+
+        readline.question('Seleccione una opción: ', (opt) => {
+            readline.close();
+            resolve(opt);
+        })
+
+    });
+
+    
+
 }
 
-export {pausa, mostrarMenu}
+const pausa = () => {
+
+    return new Promise( resolve => {
+        const readline = require('readline').createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+    
+        readline.question(`\nPresione ${ 'ENTER'.green } para continuar\n`, (opt) => {
+            readline.close();
+            resolve();
+        })
+    });
+}
 
 
+module.exports = {
+    mostrarMenu,
+    pausa
+}
